@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 수정</title>
+</head>
+<body>
+    <h2>상품 수정</h2>
+    <form id="product-edit">
+        <input id="name" type="text" placeholder="상품명" required />
+        <input id="description" type="text" placeholder="상품 설명" />
+        <input id="price" type="number" placeholder="가격" required />
+        <button type="submit">상품 수정</button>
+    </form>
+
+    <script>
+        const urlParams = new URLSearchParams(location.search);
+        const id = urlParams.get("id");
+
+        fetch("/products", { headers: { "Accept": "application/json" } })
+            .then(res => res.json())
+            .then(data => {
+                const product = data.find(p => p.id == id);
+                if (product) {
+                    document.getElementById("name").value = product.name;
+                    document.getElementById("description").value = product.description;
+                    document.getElementById("price").value = product.price;
+                }
+            });
+
+        document.getElementById("product-edit").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            fetch(`/products/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: document.getElementById("name").value,
+                    description: document.getElementById("description").value,
+                    price: parseFloat(document.getElementById("price").value)
+                })
+            }).then(() => location.href = "/products");
+        });
+    </script>
+</body>
+</html>

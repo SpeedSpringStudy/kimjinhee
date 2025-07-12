@@ -5,6 +5,7 @@ import backend.speedspringstudy.dto.ProductResponseDTO;
 import backend.speedspringstudy.service.ProductService;
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductResponseDTO> getProductList() {
         return productService.getProductList();
     }
