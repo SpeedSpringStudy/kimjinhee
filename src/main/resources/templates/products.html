@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 목록</title>
+    <style>
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>상품 목록</h2>
+        <button onclick="location.href='/products/create'">상품 추가</button>
+    </div>
+
+    <ul id="product-list"></ul>
+
+    <script>
+        fetch("/products", { headers: { "Accept": "application/json" } })
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById("product-list");
+                list.innerHTML = "";
+
+                data.forEach(p => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <div class="header">
+                            <div>
+                                <p>상품명: ${p.name}</p>
+                                <p>상품 설명: ${p.description}</p>
+                                <p>가격: ${p.price}원</p>
+                            </div>
+                            <div class="header">
+                                <a href="/products/edit?id=${p.id}">
+                                    <button type="button">수정</button>
+                                </a>
+                                <button type="button" onclick="remove(${p.id})">삭제</button>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(li);
+                });
+            });
+
+        function remove(id) {
+            fetch(`/products/${id}`, { method: "DELETE" })
+                .then(() => location.reload());
+        }
+    </script>
+</body>
+</html>
