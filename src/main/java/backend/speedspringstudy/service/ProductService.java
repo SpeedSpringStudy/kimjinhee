@@ -1,9 +1,9 @@
 package backend.speedspringstudy.service;
 
+import backend.speedspringstudy.dao.ProductDAO;
 import backend.speedspringstudy.dto.ProductRequestDTO;
 import backend.speedspringstudy.dto.ProductResponseDTO;
 import backend.speedspringstudy.entity.Product;
-import backend.speedspringstudy.repository.ProductRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    private final ProductDAO productDAO;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService(ProductDAO productDAO) {
+        this.productDAO = productDAO;
     }
 
     public List<ProductResponseDTO> getProductList() {
-        return productRepository.findAll().stream()
+        return productDAO.findAll().stream()
                 .map(p -> new ProductResponseDTO(p.getId(), p.getName(), p.getDescription(), p.getPrice()))
                 .collect(Collectors.toList());
     }
@@ -29,7 +29,7 @@ public class ProductService {
         product.setDescription(productRequestDTO.getDescription());
         product.setPrice(productRequestDTO.getPrice());
 
-        productRepository.save(product);
+        productDAO.save(product);
     }
 
     public void putProduct(Long id, ProductRequestDTO productRequestDTO) {
@@ -38,10 +38,10 @@ public class ProductService {
         product.setDescription(productRequestDTO.getDescription());
         product.setPrice(productRequestDTO.getPrice());
 
-        productRepository.update(id, product);
+        productDAO.update(id, product);
     }
 
     public void deleteProduct(Long id) {
-        productRepository.delete(id);
+        productDAO.delete(id);
     }
 }
