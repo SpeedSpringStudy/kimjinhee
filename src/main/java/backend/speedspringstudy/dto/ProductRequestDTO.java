@@ -1,5 +1,10 @@
 package backend.speedspringstudy.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ProductRequestDTO {
 
     private String name;
@@ -7,16 +12,4 @@ public class ProductRequestDTO {
     private String description;
 
     private Long price;
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
 }
