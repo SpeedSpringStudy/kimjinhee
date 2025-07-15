@@ -1,4 +1,4 @@
-package backend.speedspringstudy.controller;
+package backend.speedspringstudy.product.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

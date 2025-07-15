@@ -1,4 +1,4 @@
-package backend.speedspringstudy.dto;
+package backend.speedspringstudy.product.dto;
 
 import lombok.Getter;
 

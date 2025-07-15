@@ -1,9 +1,9 @@
-package backend.speedspringstudy.service;
+package backend.speedspringstudy.product.service;
 
-import backend.speedspringstudy.dao.ProductDAO;
-import backend.speedspringstudy.dto.ProductRequestDTO;
-import backend.speedspringstudy.dto.ProductResponseDTO;
-import backend.speedspringstudy.entity.Product;
+import backend.speedspringstudy.product.dao.ProductDAO;
+import backend.speedspringstudy.product.dto.ProductRequestDTO;
+import backend.speedspringstudy.product.dto.ProductResponseDTO;
+import backend.speedspringstudy.product.entity.Product;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;

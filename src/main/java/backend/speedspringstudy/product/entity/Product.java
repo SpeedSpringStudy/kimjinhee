@@ -1,4 +1,4 @@
-package backend.speedspringstudy.entity;
+package backend.speedspringstudy.product.entity;
 
 import lombok.Getter;
 import lombok.Setter;

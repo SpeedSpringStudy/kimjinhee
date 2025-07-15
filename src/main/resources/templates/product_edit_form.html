@@ -33,13 +33,27 @@
 
             fetch(`/products/${id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     name: document.getElementById("name").value,
                     description: document.getElementById("description").value,
                     price: parseFloat(document.getElementById("price").value)
                 })
-            }).then(() => location.href = "/products");
+            })
+            .then(({ ok, status, body }) => {
+                if (!ok) {
+                    if (status === 400 && body.errors) {
+                        alert("상품 수정에 실패했습니다.");
+                    } else {
+                        alert("상품 수정에 실패했습니다.");
+                    }
+                    return;
+                }
+                location.href = "/products";
+            })
+            .catch(() => {
+                alert("서버 오류가 발생했습니다.");
+            });
         });
     </script>
 </body>
