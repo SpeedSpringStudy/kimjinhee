@@ -1,6 +1,6 @@
-package backend.speedspringstudy.repository;
+package backend.speedspringstudy.product.repository;
 
-import backend.speedspringstudy.entity.Product;
+import backend.speedspringstudy.product.entity.Product;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

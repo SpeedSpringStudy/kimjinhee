@@ -1,6 +1,6 @@
-package backend.speedspringstudy.dao;
+package backend.speedspringstudy.product.dao;
 
-import backend.speedspringstudy.entity.Product;
+import backend.speedspringstudy.product.entity.Product;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

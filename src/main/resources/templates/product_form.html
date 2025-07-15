@@ -25,9 +25,23 @@
 
             fetch("/products", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(productData)
-            }).then(() => location.href = "/products");
+            })
+            .then(({ ok, status, body }) => {
+                if (!ok) {
+                    if (status === 400 && body.errors) {
+                        alert("상품 등록에 실패했습니다.");
+                    } else {
+                        alert("상품 등록에 실패했습니다.");
+                    }
+                    return;
+                }
+                location.href = "/products";
+            })
+            .catch(() => {
+                alert("서버 오류가 발생했습니다.");
+            });
         });
     </script>
 </body>

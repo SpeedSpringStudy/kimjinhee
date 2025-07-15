@@ -1,11 +1,11 @@
-package backend.speedspringstudy.controller;
+package backend.speedspringstudy.product.controller;
 
-import backend.speedspringstudy.dto.ProductRequestDTO;
-import backend.speedspringstudy.dto.ProductResponseDTO;
-import backend.speedspringstudy.service.ProductService;
+import backend.speedspringstudy.product.dto.ProductRequestDTO;
+import backend.speedspringstudy.product.dto.ProductResponseDTO;
+import backend.speedspringstudy.product.service.ProductService;
+import jakarta.validation.Valid;
 import java.util.List;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +31,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public void postProduct(@RequestBody ProductRequestDTO productRequestDTO) {
+    public void postProduct(@Valid @RequestBody ProductRequestDTO productRequestDTO) {
         productService.postProduct(productRequestDTO);
     }
 
     @PutMapping("/{id}")
-    public void putProduct(@PathVariable Long id, @RequestBody ProductRequestDTO productRequestDTO) {
+    public void putProduct(@PathVariable Long id, @Valid @RequestBody ProductRequestDTO productRequestDTO) {
         productService.putProduct(id, productRequestDTO);
     }
 
