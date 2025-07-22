@@ -1,6 +1,6 @@
-package backend.speedspringstudy.Member.dao;
+package backend.speedspringstudy.member.dao;
 
-import backend.speedspringstudy.Member.entity.Member;
+import backend.speedspringstudy.member.entity.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import java.util.Optional;

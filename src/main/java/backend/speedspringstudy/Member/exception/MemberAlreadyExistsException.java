@@ -1,4 +1,4 @@
-package backend.speedspringstudy.Member.exception;
+package backend.speedspringstudy.member.exception;
 
 import backend.speedspringstudy.common.exception.BusinessException;
 import backend.speedspringstudy.common.exception.ErrorCode;

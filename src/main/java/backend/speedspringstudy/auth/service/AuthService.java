@@ -1,9 +1,9 @@
 package backend.speedspringstudy.auth.service;
 
-import backend.speedspringstudy.Member.dao.MemberDAO;
+import backend.speedspringstudy.member.dao.MemberDAO;
 import backend.speedspringstudy.auth.dto.LoginRequestDTO;
 import backend.speedspringstudy.auth.dto.LoginResponseDTO;
-import backend.speedspringstudy.Member.entity.Member;
+import backend.speedspringstudy.member.entity.Member;
 import backend.speedspringstudy.auth.exception.LoginInvalidPasswordException;
 import backend.speedspringstudy.auth.exception.LoginMemberNotFoundException;
 import backend.speedspringstudy.auth.jwt.JwtTokenProvider;
