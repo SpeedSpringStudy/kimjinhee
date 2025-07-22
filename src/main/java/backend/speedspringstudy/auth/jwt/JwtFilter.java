@@ -34,6 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 String email = jwtTokenProvider.extractEmail(accessToken);
                 Member member = memberDAO.findByEmail(email).orElse(null);
 
+                // 유저 인증 완료
                 if (member != null) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(member, null, null);
