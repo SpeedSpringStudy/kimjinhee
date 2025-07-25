@@ -1,0 +1,9 @@
+package backend.speedspringstudy.common.resolver;
+
+import java.lang.annotation.*;
+
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface MemberId {
+}

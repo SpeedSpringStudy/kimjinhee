@@ -33,8 +33,8 @@ public class AuthService {
             throw new LoginInvalidPasswordException();
         }
 
-        String accessToken = jwtTokenProvider.generateAccessToken(member.getEmail());
-        String refreshToken = jwtTokenProvider.generateRefreshToken(member.getEmail());
+        String accessToken = jwtTokenProvider.generateAccessToken(member.getEmail(), member.getId());
+        String refreshToken = jwtTokenProvider.generateRefreshToken(member.getEmail(), member.getId());
 
         ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)

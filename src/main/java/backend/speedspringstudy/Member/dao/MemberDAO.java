@@ -13,6 +13,11 @@ public class MemberDAO {
 
     private final EntityManager em;
 
+    public Optional<Member> findById(Long id) {
+        Member member = em.find(Member.class, id);
+        return Optional.ofNullable(member);
+    }
+
     public Optional<Member> findByEmail(String email) {
         try {
             Member member = em.createQuery("SELECT m FROM Member m WHERE m.email = :email", Member.class)
