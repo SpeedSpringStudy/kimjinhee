@@ -1,18 +1,20 @@
 package backend.speedspringstudy.wish.service;
 
-import backend.speedspringstudy.member.dao.MemberDAO;
 import backend.speedspringstudy.member.entity.Member;
 import backend.speedspringstudy.member.exception.MemberNotFoundException;
+import backend.speedspringstudy.member.repository.MemberRepository;
 import backend.speedspringstudy.product.dto.ProductResponseDTO;
 import backend.speedspringstudy.product.entity.Product;
 import backend.speedspringstudy.product.exception.ProductNotFoundException;
-import backend.speedspringstudy.wish.dao.WishDAO;
 import backend.speedspringstudy.wish.entity.Wish;
 import backend.speedspringstudy.wish.exception.WishAlreadyExistsException;
 import backend.speedspringstudy.wish.exception.WishNotFoundException;
+import backend.speedspringstudy.wish.repository.WishRepository;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +22,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class WishService {
 
-    private final WishDAO wishDAO;
-    private final MemberDAO memberDAO;
+    private final WishRepository wishRepository;
+    private final MemberRepository memberRepository;
     private final EntityManager em;
 
     @Transactional
     public void postWish(Long memberId, Long productId) {
-        Member member = memberDAO.findById(memberId)
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);
 
-        if (wishDAO.existsByMemberAndProduct(memberId, productId)) {
+        if (wishRepository.existsByMemberIdAndProductId(memberId, productId)) {
             throw new WishAlreadyExistsException();
         }
 
@@ -42,14 +44,14 @@ public class WishService {
                 .product(product)
                 .build();
 
-        wishDAO.save(wish);
+        wishRepository.save(wish);
     }
 
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> getWishList(Long memberId) {
-        List<Wish> wishes = wishDAO.findWishListByMemberId(memberId);
+    public List<ProductResponseDTO> getWishList(Long memberId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        return wishes.stream()
+        return wishRepository.findAllByMemberId(memberId, pageable).stream()
                 .map(Wish::getProduct)
                 .map(p -> new ProductResponseDTO(
                         p.getId(),
@@ -66,9 +68,9 @@ public class WishService {
         if (product == null)
             throw new ProductNotFoundException();
 
-        Wish wish = wishDAO.findByMemberAndProduct(memberId, productId)
+        Wish wish = wishRepository.findByMemberIdAndProductId(memberId, productId)
                 .orElseThrow(WishNotFoundException::new);
 
-        wishDAO.delete(wish);
+        wishRepository.delete(wish);
     }
 }

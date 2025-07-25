@@ -1,5 +1,6 @@
 package backend.speedspringstudy.product.controller;
 
+import backend.speedspringstudy.product.dto.ProductListRequestDTO;
 import backend.speedspringstudy.product.dto.ProductRequestDTO;
 import backend.speedspringstudy.product.dto.ProductResponseDTO;
 import backend.speedspringstudy.product.service.ProductService;
@@ -26,8 +27,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponseDTO> getProductList() {
-        return productService.getProductList();
+    public List<ProductResponseDTO> getProductList(@RequestBody ProductListRequestDTO productListRequestDTO) {
+        return productService.getProductList(productListRequestDTO.page(), productListRequestDTO.size());
     }
 
     @PostMapping

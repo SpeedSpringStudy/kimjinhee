@@ -1,11 +1,5 @@
 package backend.speedspringstudy.auth.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
-public class LoginResponseDTO {
-
-    private String accessToken;
-}
+public record LoginResponseDTO(
+        String accessToken
+) {}
