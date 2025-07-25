@@ -1,7 +1,7 @@
 package backend.speedspringstudy.auth.jwt;
 
-import backend.speedspringstudy.member.dao.MemberDAO;
 import backend.speedspringstudy.member.entity.Member;
+import backend.speedspringstudy.member.repository.MemberRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
-    private final MemberDAO memberDAO;
+    private final MemberRepository memberRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -32,7 +32,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             if (jwtTokenProvider.isAccessTokenValid(accessToken)) {
                 String email = jwtTokenProvider.extractEmail(accessToken);
-                Member member = memberDAO.findByEmail(email).orElse(null);
+                Member member = memberRepository.findByEmail(email).orElse(null);
 
                 // 유저 인증 완료
                 if (member != null) {

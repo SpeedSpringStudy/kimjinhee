@@ -1,12 +1,12 @@
 package backend.speedspringstudy.auth.service;
 
-import backend.speedspringstudy.member.dao.MemberDAO;
 import backend.speedspringstudy.auth.dto.LoginRequestDTO;
 import backend.speedspringstudy.auth.dto.LoginResponseDTO;
 import backend.speedspringstudy.member.entity.Member;
 import backend.speedspringstudy.auth.exception.LoginInvalidPasswordException;
 import backend.speedspringstudy.auth.exception.LoginMemberNotFoundException;
 import backend.speedspringstudy.auth.jwt.JwtTokenProvider;
+import backend.speedspringstudy.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final MemberDAO memberDAO;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
     public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO request, HttpServletResponse response) {
 
-        Member member = memberDAO.findByEmail(request.getEmail())
+        Member member = memberRepository.findByEmail(request.getEmail())
                 .orElseThrow(LoginMemberNotFoundException::new);
 
         if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {

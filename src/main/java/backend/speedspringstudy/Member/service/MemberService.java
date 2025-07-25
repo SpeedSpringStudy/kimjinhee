@@ -1,10 +1,10 @@
 package backend.speedspringstudy.member.service;
 
-import backend.speedspringstudy.member.dao.MemberDAO;
 import backend.speedspringstudy.member.dto.SignupRequestDTO;
 import backend.speedspringstudy.member.entity.Authority;
 import backend.speedspringstudy.member.entity.Member;
 import backend.speedspringstudy.member.exception.MemberAlreadyExistsException;
+import backend.speedspringstudy.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberDAO memberDAO;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void signup(SignupRequestDTO request) {
-        if (memberDAO.findByEmail(request.getEmail()).isPresent()) {
+        if (memberRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new MemberAlreadyExistsException();
         }
 
@@ -30,6 +30,6 @@ public class MemberService {
                 Authority.ROLE_USER
         );
 
-        memberDAO.save(newMember);
+        memberRepository.save(newMember);
     }
 }
