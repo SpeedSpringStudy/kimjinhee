@@ -1,4 +1,4 @@
-package backend.speedspringstudy.Member.entity;
+package backend.speedspringstudy.member.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

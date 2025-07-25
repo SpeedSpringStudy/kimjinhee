@@ -1,7 +1,7 @@
-package backend.speedspringstudy.Member.controller;
+package backend.speedspringstudy.member.controller;
 
-import backend.speedspringstudy.Member.dto.SignupRequestDTO;
-import backend.speedspringstudy.Member.service.MemberService;
+import backend.speedspringstudy.member.dto.SignupRequestDTO;
+import backend.speedspringstudy.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

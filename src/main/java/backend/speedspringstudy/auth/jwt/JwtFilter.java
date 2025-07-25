@@ -1,7 +1,7 @@
 package backend.speedspringstudy.auth.jwt;
 
-import backend.speedspringstudy.Member.dao.MemberDAO;
-import backend.speedspringstudy.Member.entity.Member;
+import backend.speedspringstudy.member.dao.MemberDAO;
+import backend.speedspringstudy.member.entity.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

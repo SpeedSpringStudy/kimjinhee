@@ -1,10 +1,10 @@
-package backend.speedspringstudy.Member.service;
+package backend.speedspringstudy.member.service;
 
-import backend.speedspringstudy.Member.dao.MemberDAO;
-import backend.speedspringstudy.Member.dto.SignupRequestDTO;
-import backend.speedspringstudy.Member.entity.Authority;
-import backend.speedspringstudy.Member.entity.Member;
-import backend.speedspringstudy.Member.exception.MemberAlreadyExistsException;
+import backend.speedspringstudy.member.dao.MemberDAO;
+import backend.speedspringstudy.member.dto.SignupRequestDTO;
+import backend.speedspringstudy.member.entity.Authority;
+import backend.speedspringstudy.member.entity.Member;
+import backend.speedspringstudy.member.exception.MemberAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

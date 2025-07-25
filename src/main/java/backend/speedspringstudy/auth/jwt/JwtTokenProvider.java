@@ -1,8 +1,10 @@
 package backend.speedspringstudy.auth.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +23,10 @@ public class JwtTokenProvider {
     private final long REFRESH_EXPIRED_TIME = 1000 * 60 * 60 * 24 * 7;
 
     // 액세스 토큰 생성
-    public String generateAccessToken(String email) {
+    public String generateAccessToken(String email, Long memberId) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("memberId", memberId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_EXPIRED_TIME))
                 .signWith(SignatureAlgorithm.HS256, accessTokenSecret.getBytes(StandardCharsets.UTF_8))
@@ -31,9 +34,10 @@ public class JwtTokenProvider {
     }
 
     // 리프레시 토큰 생성
-    public String generateRefreshToken(String email) {
+    public String generateRefreshToken(String email, Long memberId) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("memberId", memberId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + REFRESH_EXPIRED_TIME))
                 .signWith(SignatureAlgorithm.HS256, refreshTokenSecret.getBytes(StandardCharsets.UTF_8))
@@ -61,5 +65,20 @@ public class JwtTokenProvider {
         } catch (JwtException e) {
             return false;
         }
+    }
+
+    public Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(accessTokenSecret.getBytes(StandardCharsets.UTF_8))
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String resolveToken(HttpServletRequest request) {
+        String bearer = request.getHeader("Authorization");
+        if (bearer != null && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7);
+        }
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package backend.speedspringstudy.Member.dto;
+package backend.speedspringstudy.member.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

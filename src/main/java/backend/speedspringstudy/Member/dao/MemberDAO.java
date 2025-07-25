@@ -1,6 +1,6 @@
-package backend.speedspringstudy.Member.dao;
+package backend.speedspringstudy.member.dao;
 
-import backend.speedspringstudy.Member.entity.Member;
+import backend.speedspringstudy.member.entity.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import java.util.Optional;
@@ -12,6 +12,11 @@ import org.springframework.stereotype.Repository;
 public class MemberDAO {
 
     private final EntityManager em;
+
+    public Optional<Member> findById(Long id) {
+        Member member = em.find(Member.class, id);
+        return Optional.ofNullable(member);
+    }
 
     public Optional<Member> findByEmail(String email) {
         try {
