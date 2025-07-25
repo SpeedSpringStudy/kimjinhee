@@ -13,6 +13,8 @@ import backend.speedspringstudy.wish.repository.WishRepository;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,10 +48,10 @@ public class WishService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductResponseDTO> getWishList(Long memberId) {
-        List<Wish> wishes = wishRepository.findAllByMemberId(memberId);
+    public List<ProductResponseDTO> getWishList(Long memberId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        return wishes.stream()
+        return wishRepository.findAllByMemberId(memberId, pageable).stream()
                 .map(Wish::getProduct)
                 .map(p -> new ProductResponseDTO(
                         p.getId(),

@@ -24,12 +24,12 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO request, HttpServletResponse response) {
+    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
 
-        Member member = memberRepository.findByEmail(request.getEmail())
+        Member member = memberRepository.findByEmail(loginRequestDTO.email())
                 .orElseThrow(LoginMemberNotFoundException::new);
 
-        if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
+        if (!passwordEncoder.matches(loginRequestDTO.password(), member.getPassword())) {
             throw new LoginInvalidPasswordException();
         }
 

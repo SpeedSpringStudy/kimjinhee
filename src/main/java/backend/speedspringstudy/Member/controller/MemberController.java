@@ -18,8 +18,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> signup(@RequestBody SignupRequestDTO request) {
-        memberService.signup(request);
+    public ResponseEntity<Void> signup(@RequestBody SignupRequestDTO signupRequestDTO) {
+        memberService.signup(signupRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

@@ -18,15 +18,15 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void signup(SignupRequestDTO request) {
-        if (memberRepository.findByEmail(request.getEmail()).isPresent()) {
+    public void signup(SignupRequestDTO signupRequestDTO) {
+        if (memberRepository.findByEmail(signupRequestDTO.email()).isPresent()) {
             throw new MemberAlreadyExistsException();
         }
 
         Member newMember = new Member(
                 null,
-                request.getEmail(),
-                passwordEncoder.encode(request.getPassword()),
+                signupRequestDTO.email(),
+                passwordEncoder.encode(signupRequestDTO.password()),
                 Authority.ROLE_USER
         );
 
