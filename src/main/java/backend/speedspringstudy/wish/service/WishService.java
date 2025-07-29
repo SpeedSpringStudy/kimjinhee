@@ -57,7 +57,8 @@ public class WishService {
                         p.getId(),
                         p.getName(),
                         p.getDescription(),
-                        p.getPrice()
+                        p.getPrice(),
+                        p.getCategory().getId()
                 ))
                 .toList();
     }

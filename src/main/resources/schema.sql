@@ -2,7 +2,9 @@ CREATE TABLE IF NOT EXISTS product (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    price BIGINT NOT NULL
+    price BIGINT NOT NULL,
+    category_id BIGINT NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS member (

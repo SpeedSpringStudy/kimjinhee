@@ -14,6 +14,8 @@ public record ProductRequestDTO(
         String description,
 
         @NotNull
-        Long price
+        Long price,
 
+        @NotNull
+        Long categoryId
 ) {}

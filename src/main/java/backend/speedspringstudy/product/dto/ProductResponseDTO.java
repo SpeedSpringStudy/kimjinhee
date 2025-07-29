@@ -4,5 +4,6 @@ public record ProductResponseDTO(
         Long id,
         String name,
         String description,
-        Long price
+        Long price,
+        Long categoryId
 ) {}
