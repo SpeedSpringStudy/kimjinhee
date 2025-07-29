@@ -20,3 +20,11 @@ CREATE TABLE IF NOT EXISTS wish (
     FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE,
     UNIQUE (member_id, product_id)
 );
+
+CREATE TABLE IF NOT EXISTS category (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    color VARCHAR(255) NOT NULL,
+    image_url VARCHAR(255),
+    description TEXT
+);

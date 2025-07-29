@@ -22,6 +22,9 @@ public enum ErrorCode {
     PRODUCT_NAME_INVALID(HttpStatus.BAD_REQUEST, "P001", "잘못된 상품명 입력입니다."),
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "P002", "존재하지 않는 상품입니다."),
 
+    CATEGORY_ALREADY_EXISTS(HttpStatus.CONFLICT, "C001", "이미 존재하는 카테고리입니다."),
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "C002", "존재하지 않는 카테고리입니다."),
+
     WISH_ALREADY_EXISTS(HttpStatus.CONFLICT, "W001", "이미 위시리스트에 추가된 상품입니다."),
     WISH_NOT_FOUND(HttpStatus.NOT_FOUND, "W002", "위시리스트에 존재하지 않는 상품입니다.");
 
