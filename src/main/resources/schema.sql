@@ -30,3 +30,18 @@ CREATE TABLE IF NOT EXISTS category (
     image_url VARCHAR(255),
     description TEXT
 );
+
+CREATE TABLE IF NOT EXISTS option (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS product_option (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    product_id BIGINT NOT NULL,
+    option_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
+
+    CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES product(id),
+    CONSTRAINT fk_option FOREIGN KEY (option_id) REFERENCES option(id)
+);
