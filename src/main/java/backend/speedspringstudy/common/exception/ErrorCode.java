@@ -22,6 +22,12 @@ public enum ErrorCode {
     PRODUCT_NAME_INVALID(HttpStatus.BAD_REQUEST, "P001", "잘못된 상품명 입력입니다."),
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "P002", "존재하지 않는 상품입니다."),
 
+    OPTION_ALREADY_EXISTS(HttpStatus.CONFLICT, "O001", "이미 존재하는 옵션명입니다."),
+    OPTION_NOT_FOUND(HttpStatus.NOT_FOUND, "O002", "존재하지 않는 옵션입니다."),
+
+    PRODUCT_OPTION_ALREADY_EXISTS(HttpStatus.CONFLICT, "PO001", "이미 존재하는 상품 옵션명입니다."),
+    PRODUCT_OPTION_NOT_FOUND(HttpStatus.NOT_FOUND, "PO002", "존재하지 않는 상품 옵션입니다."),
+
     CATEGORY_ALREADY_EXISTS(HttpStatus.CONFLICT, "C001", "이미 존재하는 카테고리입니다."),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "C002", "존재하지 않는 카테고리입니다."),
 
