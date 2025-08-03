@@ -7,6 +7,7 @@ import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
@@ -24,6 +25,9 @@ public class ProductOption {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    @Version
+    private int version;
 
     public void updateQuantity(int quantity) {
         this.quantity = quantity;
