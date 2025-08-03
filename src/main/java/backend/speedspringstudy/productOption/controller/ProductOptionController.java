@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -40,5 +41,10 @@ public class ProductOptionController {
     @DeleteMapping("/{id}")
     public void deleteProductOption(@PathVariable Long id) {
         productOptionService.deleteProductOption(id);
+    }
+
+    @PostMapping("/{id}/decrease")
+    public void decreaseQuantity(@PathVariable Long id, @RequestParam int quantity) {
+        productOptionService.decreaseQuantityWithRetry(id, quantity);
     }
 }

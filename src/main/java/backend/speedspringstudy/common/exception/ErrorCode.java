@@ -27,6 +27,8 @@ public enum ErrorCode {
 
     PRODUCT_OPTION_ALREADY_EXISTS(HttpStatus.CONFLICT, "PO001", "이미 존재하는 상품 옵션명입니다."),
     PRODUCT_OPTION_NOT_FOUND(HttpStatus.NOT_FOUND, "PO002", "존재하지 않는 상품 옵션입니다."),
+    PRODUCT_OPTION_INSUFFICIENT_STOCK(HttpStatus.BAD_REQUEST, "P003", "해당 상품 옵션의 재고가 부족합니다."),
+    PRODUCT_OPTION_STOCK_CONFLICT(HttpStatus.CONFLICT, "P004", "재고 차감 중 충돌이 발생했습니다."),
 
     CATEGORY_ALREADY_EXISTS(HttpStatus.CONFLICT, "C001", "이미 존재하는 카테고리입니다."),
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "C002", "존재하지 않는 카테고리입니다."),

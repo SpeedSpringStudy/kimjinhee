@@ -10,11 +10,15 @@ import backend.speedspringstudy.productOption.dto.ProductOptionRequestDTO;
 import backend.speedspringstudy.productOption.dto.ProductOptionResponseDTO;
 import backend.speedspringstudy.productOption.entity.ProductOption;
 import backend.speedspringstudy.productOption.exception.ProductOptionAlreadyExists;
+import backend.speedspringstudy.productOption.exception.ProductOptionInsufficientStockException;
 import backend.speedspringstudy.productOption.exception.ProductOptionNotFoundException;
+import backend.speedspringstudy.productOption.exception.ProductOptionStockConflictException;
 import backend.speedspringstudy.productOption.repository.ProductOptionRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -64,5 +68,29 @@ public class ProductOptionService {
 
     public void deleteProductOption(Long id) {
         productOptionRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void decreaseQuantity(Long productOptionId, int orderQty) {
+        ProductOption option = productOptionRepository.findById(productOptionId)
+                .orElseThrow(() -> new ProductOptionNotFoundException());
+
+        if (option.getQuantity() < orderQty) {
+            throw new ProductOptionInsufficientStockException();
+        }
+
+        option.setQuantity(option.getQuantity() - orderQty);
+    }
+
+    public void decreaseQuantityWithRetry(Long id, int qty) {
+        int attempts = 2;
+        while (attempts-- > 0) {
+            try {
+                decreaseQuantity(id, qty);
+                return;
+            } catch (OptimisticLockingFailureException e) {
+            }
+        }
+        throw new ProductOptionStockConflictException();
     }
 }
