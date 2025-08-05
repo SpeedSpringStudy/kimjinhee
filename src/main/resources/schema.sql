@@ -1,3 +1,11 @@
+CREATE TABLE IF NOT EXISTS category (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    color VARCHAR(255) NOT NULL,
+    image_url VARCHAR(255),
+    description TEXT
+);
+
 CREATE TABLE IF NOT EXISTS product (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -8,10 +16,11 @@ CREATE TABLE IF NOT EXISTS product (
 );
 
 CREATE TABLE IF NOT EXISTS member (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    authority VARCHAR(255)
+   id BIGINT AUTO_INCREMENT PRIMARY KEY,
+   kakao_id BIGINT UNIQUE,
+   email VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL,
+   authority VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS wish (
@@ -21,14 +30,6 @@ CREATE TABLE IF NOT EXISTS wish (
     FOREIGN KEY (member_id) REFERENCES member(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE,
     UNIQUE (member_id, product_id)
-);
-
-CREATE TABLE IF NOT EXISTS category (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    color VARCHAR(255) NOT NULL,
-    image_url VARCHAR(255),
-    description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS option (

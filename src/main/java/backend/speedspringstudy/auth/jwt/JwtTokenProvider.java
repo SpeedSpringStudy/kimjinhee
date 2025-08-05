@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${jwt.access-token.secret}")
+    @Value("${jwt.access-token-secret}}")
     private String accessTokenSecret;
 
-    @Value("${jwt.refresh-token.secret}")
+    @Value("${jwt.refresh-token-secret}")
     private String refreshTokenSecret;
 
     private final long ACCESS_EXPIRED_TIME = 1000 * 60 * 60;

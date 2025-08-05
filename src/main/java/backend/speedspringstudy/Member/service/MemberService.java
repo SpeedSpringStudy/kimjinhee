@@ -23,13 +23,28 @@ public class MemberService {
             throw new MemberAlreadyExistsException();
         }
 
-        Member newMember = new Member(
-                null,
-                signupRequestDTO.email(),
-                passwordEncoder.encode(signupRequestDTO.password()),
-                Authority.ROLE_USER
-        );
+        Member newMember = Member.builder()
+                .email(signupRequestDTO.email())
+                .password(passwordEncoder.encode(signupRequestDTO.password()))
+                .authority(Authority.ROLE_USER)
+                .build();
 
         memberRepository.save(newMember);
+    }
+
+    @Transactional
+    public Member kakaoSignup(String email, Long kakaoId) {
+        if (memberRepository.findByEmail(email).isPresent()) {
+            throw new MemberAlreadyExistsException();
+        }
+
+        Member member = Member.builder()
+                .email(email)
+                .kakaoId(kakaoId)
+                .password(passwordEncoder.encode("password"))
+                .authority(Authority.ROLE_USER)
+                .build();
+
+        return memberRepository.save(member);
     }
 }
