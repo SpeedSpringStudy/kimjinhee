@@ -39,4 +39,4 @@ out/
 .idea/
 logs/
 .env
-env.properties
+application.yml

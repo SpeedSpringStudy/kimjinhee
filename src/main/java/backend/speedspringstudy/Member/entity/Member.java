@@ -28,6 +28,9 @@ public class Member {
     @Column(nullable = false)
     private String email;
 
+    @Column(unique = true, nullable = true)
+    private Long kakaoId;
+
     @Column(nullable = false)
     private String password;
 

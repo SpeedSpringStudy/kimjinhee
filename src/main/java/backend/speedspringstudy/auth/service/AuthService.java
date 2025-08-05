@@ -7,20 +7,21 @@ import backend.speedspringstudy.auth.exception.LoginInvalidPasswordException;
 import backend.speedspringstudy.auth.exception.LoginMemberNotFoundException;
 import backend.speedspringstudy.auth.jwt.JwtTokenProvider;
 import backend.speedspringstudy.member.repository.MemberRepository;
+import backend.speedspringstudy.member.service.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.Duration;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -36,16 +37,37 @@ public class AuthService {
         String accessToken = jwtTokenProvider.generateAccessToken(member.getEmail(), member.getId());
         String refreshToken = jwtTokenProvider.generateRefreshToken(member.getEmail(), member.getId());
 
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+        addRefreshTokenToCookie(response, refreshToken);
+
+        return ResponseEntity.ok(new LoginResponseDTO(accessToken));
+    }
+
+    @Transactional
+    public LoginResponseDTO kakaoLogin(
+            Long kakaoId,
+            String email,
+            HttpServletResponse response
+    ) {
+        Member member = memberRepository.findByKakaoId(kakaoId)
+                .orElseGet(() -> memberService.kakaoSignup(email, kakaoId));
+
+        String accessToken = jwtTokenProvider.generateAccessToken(member.getEmail(), member.getId());
+        String refreshToken = jwtTokenProvider.generateRefreshToken(member.getEmail(), member.getId());
+
+        addRefreshTokenToCookie(response, refreshToken);
+
+        return new LoginResponseDTO(accessToken);
+    }
+
+    private void addRefreshTokenToCookie(HttpServletResponse response, String refreshToken) {
+        ResponseCookie cookie = ResponseCookie.from("refresh_token", refreshToken)
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
-                .maxAge(Duration.ofDays(7))
                 .sameSite("Strict")
+                .maxAge(7 * 24 * 60 * 60)
                 .build();
 
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-        return ResponseEntity.ok(new LoginResponseDTO(accessToken));
+        response.addHeader("Set-Cookie", cookie.toString());
     }
 }
